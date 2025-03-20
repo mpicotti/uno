@@ -1,8 +1,17 @@
 package uno;
 
-public class carta {
+class Carta {
     public int numero;
-    public enum colors{
+    public enum colors
+    {
         Groc, Vermell, Blau, Verd
+    }
+
+    public Carta (int numero){
+        this.numero = numero;
+    }
+
+    public int getNumero(){
+        return numero;
     }
 }
