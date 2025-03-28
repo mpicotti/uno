@@ -1,19 +1,35 @@
 package uno;
+import java.util.ArrayList;
 
-class Jugador {
-    public String nom;
-    public Carta[] cartes;
+public class Jugador {
 
-    public Jugador(String nom, Carta[] cartes) {
+    private String nom;
+    private ArrayList<Carta> cartes;
+
+    public Jugador(String nom) {
         this.nom = nom;
-        this.cartes = cartes;
+        cartes = new ArrayList<>();
     }
 
-    public String getnom(){
+    public String getNom() {
         return nom;
     }
 
-    public Carta[] getCartes(){
+    public ArrayList<Carta> getCartes() {
         return cartes;
     }
+
+    public void addCarta(Carta carta) {
+        cartes.add(carta);
+    }
+
+    public Carta tirarCarta(Carta carta) {
+        if (cartes.contains(carta)) {
+            cartes.remove(carta);
+            return carta;
+        }
+        return null;
+    }
+
+
 }
