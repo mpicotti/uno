@@ -1,4 +1,5 @@
-package uno;
+package uno.logica;
+
 import java.util.ArrayList;
 
 public class Jugador {

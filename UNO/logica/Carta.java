@@ -1,14 +1,14 @@
-package uno;
+package uno.logica;
 
 public class Carta {
     public int numero;
-    public colors color;
+    public Color color;
 
-    public enum colors {
+    public enum Color {
         Groc, Vermell, Blau, Verd
     }
 
-    public Carta(colors color, int numero) {
+    public Carta(Color color, int numero) {
         this.color = color;
         this.numero = numero;
     }
@@ -17,7 +17,7 @@ public class Carta {
         return numero;
     }
 
-    public colors getColor() {
+    public Color getColor() {
         return color;
     }
 }
