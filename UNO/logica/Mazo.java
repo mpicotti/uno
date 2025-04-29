@@ -10,40 +10,42 @@ public class Mazo {
     public Mazo() {
         cartes = new Stack<>();
         cartesInicials = new Stack<>();
-        int i, j;
-        for (i = 0; i < Carta.Color.values().length; i++) {
-            cartes.push(new Carta( Carta.Color.values()[i], 0));
-            for (j = 1; j <= 9; j++) {
-                cartes.push(new Carta(Carta.Color.values()[i] ,j));
-                cartes.push(new Carta(Carta.Color.values()[i], j));
+        for (Carta.Color color : Carta.Color.values()) {
+            cartes.push(new Carta(color, 0));
+            for (int j = 1; j <= 9; j++) {
+                cartes.push(new Carta(color, j));
+                cartes.push(new Carta(color, j));
             }
         }
     }
 
     public Stack<Carta> getCartes() {
-
         return cartes;
     }
 
-    public Carta afagarCarta() {
-        return cartes.pop();
+    public Carta agafarCarta() {
+        return cartes.isEmpty() ? null : cartes.pop();
     }
 
     public void reiniciar(Pilo pilo) {
         if (pilo.getCartes().size() > 1) {
-            Stack<Carta> cartasPilo = new Stack<>();
-            cartasPilo.addAll(pilo.getCartes());
-            Carta ultimaCarta = cartasPilo.pop();
-            while (!cartasPilo.isEmpty()) {
-                cartes.push(cartasPilo.pop());
+            Stack<Carta> cartesPilo = new Stack<>();
+            cartesPilo.addAll(pilo.getCartes());
+            Carta ultimaCarta = cartesPilo.pop();
+            while (!cartesPilo.isEmpty()) {
+                cartes.push(cartesPilo.pop());
             }
-
             pilo.getCartes().clear();
             pilo.getCartes().push(ultimaCarta);
             barrejar();
         }
     }
+
     public void barrejar() {
         Collections.shuffle(cartes);
+    }
+
+    public boolean esBuit() {
+        return cartes.isEmpty();
     }
 }

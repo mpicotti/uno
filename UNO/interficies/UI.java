@@ -3,13 +3,14 @@ package uno.interficies;
 import uno.logica.Carta;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class UI {
     public static final String RESET = "\u001B[0m";
-    public static final String RED = "\u001B[31m"; 
-    public static final String GREEN = "\u001B[32m"; 
-    public static final String YELLOW = "\u001B[33m"; 
-    public static final String BLUE = "\u001B[34m"; 
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
 
     private static String pintarCarta(Carta carta) {
         String color = "";
@@ -38,14 +39,13 @@ public class UI {
             %s│         │%s
             %s│       %d │%s
             %s└─────────┘%s""",
-            color, RESET,
-            color, carta.getNumero(), RESET,
-            color, RESET,
-            color, RESET,
-            color, RESET,
-            color, carta.getNumero(), RESET,
-            color, RESET);
-
+                color, RESET,
+                color, carta.getNumero(), RESET,
+                color, RESET,
+                color, RESET,
+                color, RESET,
+                color, carta.getNumero(), RESET,
+                color, RESET);
 
         return cartaPintada;
     }
@@ -57,19 +57,40 @@ public class UI {
     public static void mostrarCartes(ArrayList<Carta> cartes) {
         int quantitat = cartes.size();
         String[][] cartesPintades = new String[quantitat][];
-    
+
         for (int i = 0; i < quantitat; i++) {
             cartesPintades[i] = pintarCarta(cartes.get(i)).split("\n");
         }
-    
+
         int altura = cartesPintades[0].length;
-    
+
         for (int i = 0; i < altura; i++) {
             for (int j = 0; j < quantitat; j++) {
                 System.out.print(cartesPintades[j][i] + "  ");
             }
             System.out.println();
         }
+        System.out.print("   ");
+        for (int j = 0; j < quantitat; j++) {
+            System.out.printf("(%2s)         ", j);
+        }
+        System.out.println();
     }
-    
+
+
+    public static int demanarCarta(int maxCartes) {
+        Scanner scanner = new Scanner(System.in);
+        int opcio = -1;
+
+        while (opcio < 0 || opcio >= maxCartes) {
+            System.out.print("Introdueix el número de la carta que vols jugar (0 - " + (maxCartes - 1) + "): ");
+            if (scanner.hasNextInt()) {
+                opcio = scanner.nextInt();
+            } else {
+                scanner.next();
+                System.out.println("Entrada no vàlida. Torna-ho a provar.");
+            }
+        }
+        return opcio;
+    }
 }

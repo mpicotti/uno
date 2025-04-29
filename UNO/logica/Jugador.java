@@ -20,17 +20,34 @@ public class Jugador {
         return cartes;
     }
 
-    public void addCarta(Carta carta) {
-        cartes.add(carta);
-    }
 
-    public Carta tirarCarta(Carta carta) {
+    public Carta tirarCarta(Carta carta, Pilo pilo) {
         if (cartes.contains(carta)) {
             cartes.remove(carta);
+            pilo.addCarta(carta);
             return carta;
         }
         return null;
     }
 
+    public void robaCarta(Mazo mazo) {
+        Carta cartaRobada = mazo.agafarCarta();
+        if (cartaRobada != null) {
+            cartes.add(cartaRobada);
+        }
+    }
 
+    public int nombreDeCartes() {
+        return cartes.size();
+    }
+
+    public boolean potTirarCarta(Carta cartaSuperior) {
+        for (int i = 0; i < cartes.size(); i++) {
+            Carta cartaJugador = cartes.get(i);
+            if (Regles.sonCartesCompatibles(cartaJugador, cartaSuperior)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

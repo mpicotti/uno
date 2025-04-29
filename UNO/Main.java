@@ -2,6 +2,7 @@ package uno;
 
 public class Main {
     public static void main(String[] args) {
-        Partida.jugar(args);
+        Partida partida = new Partida();
+        partida.jugar();
     }
 }

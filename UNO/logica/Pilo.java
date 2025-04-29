@@ -18,10 +18,10 @@ public class Pilo {
     }
 
     public Carta consultarCarta() {
-            return cartes.peek();
+        return cartes.peek();
     }
 
     public Carta agafarCarta() {
-            return cartes.pop();
+        return cartes.pop();
     }
 }
