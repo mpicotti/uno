@@ -1,8 +1,6 @@
 package uno.interficies;
 
-import uno.logica.Carta;
-import uno.logica.CartaCanviColor;
-import uno.logica.CartaRobarQuatre;
+import uno.logica.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,9 +27,14 @@ public class UI {
         String textCentre = "  UNO  ";
         if (carta instanceof CartaRobarQuatre) {
             textCentre = "  +4   ";
-        } else if (carta instanceof CartaCanviColor && !(carta instanceof CartaRobarQuatre)) {
+        } else if (carta instanceof CartaRobarDos) {
+            textCentre = "  +2   ";
+        } else if (carta instanceof CartaCanviColor) {
             textCentre = " COLOR ";
+        } else if (carta instanceof CartaProhibit) {
+            textCentre = "  \uD83D\uDEAB   ";
         }
+
 
         String numeroStr = (carta.getNumero() == -1) ? " " : String.valueOf(carta.getNumero());
 

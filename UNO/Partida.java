@@ -59,17 +59,30 @@ public class Partida {
                     System.out.println(jugador.getNom() + " ha tirat:");
                     UI.mostrarCarta(seleccionada);
 
-                    if (seleccionada instanceof CartaCanviColor) {
-                        Carta.Color nuevoColor = UI.demanarColor();
-                        ((CartaCanviColor)seleccionada).setColor(nuevoColor);
-                        System.out.println("Color cambiado a: " + nuevoColor);
+                        if (seleccionada instanceof CartaCanviColor) {
+                            Carta.Color nuevoColor = UI.demanarColor();
+                            ((CartaCanviColor)seleccionada).setColor(nuevoColor);
+                            System.out.println("Color canviat a: " + nuevoColor);
+
+                        if (seleccionada instanceof CartaProhibit) {
+                            System.out.println("Efecte de carta: Prohibit!");
+                            ((CartaProhibit)seleccionada).prohibir(ordreJugadors);
+                        }
 
                         if (seleccionada instanceof CartaRobarQuatre) {
                             Jugador siguienteJugador = ordreJugadors.getSeguentJugador();
                             ((CartaRobarQuatre)seleccionada).robarQuatre(siguienteJugador, mazo);
-                            System.out.println(siguienteJugador.getNom() + " ha de robar 4 cartes!");
-                            ordreJugadors.passarTorn(); // El siguiente jugador pierde turno
+                            System.out.println(siguienteJugador.getNom() + " ha de robat 4 cartes");
+                            ordreJugadors.passarTorn();
                         }
+
+                        if (seleccionada instanceof CartaRobarDos) {
+                            Jugador siguienteJugador = ordreJugadors.getSeguentJugador();
+                            ((CartaRobarDos)seleccionada).robarDos(siguienteJugador, mazo);
+                            System.out.println(siguienteJugador.getNom() + " ha de robat 2 cartes");
+                            ordreJugadors.passarTorn();
+                        }
+
                     }
 
                     cartaValidaJugada = true;

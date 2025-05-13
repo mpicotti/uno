@@ -17,6 +17,10 @@ public class Mazo {
                     cartes.push(new Carta(color, j));
                     cartes.push(new Carta(color, j));
                 }
+                cartes.push(new CartaRobarDos(color));
+                cartes.push(new CartaRobarDos(color));
+                cartes.push(new CartaProhibit(color));
+                cartes.push(new CartaProhibit(color));
             }
         }
         for (int i = 0; i < 4; i++) {
