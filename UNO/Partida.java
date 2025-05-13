@@ -1,27 +1,22 @@
 package uno;
-
 import uno.logica.*;
 import uno.interficies.UI;
 import java.util.Scanner;
 
 public class Partida {
-
     private Mazo mazo;
     private Pilo pilo;
     private OrdreJugadors ordreJugadors;
-
     Scanner scanner = new Scanner(System.in);
 
     public void jugar() {
         preparar();
         boolean finalitzat = false;
-
         pilo.addCarta(mazo.agafarCarta());
 
         while (!finalitzat) {
             finalitzat = torn();
         }
-
         System.out.println("Fi de la partida");
     }
 
@@ -35,11 +30,9 @@ public class Partida {
         NombreJugadors = scanner.nextInt();
 
         ordreJugadors = new OrdreJugadors();
-
         for (int i = 1; i <= NombreJugadors; i++) {
             ordreJugadors.crearJugador("Jugador " + i);
         }
-
         ordreJugadors.barrejarOrdre();
         repartirCartes();
     }
@@ -57,15 +50,28 @@ public class Partida {
 
         if (jugador.potTirarCarta(cartaSuperior)) {
             boolean cartaValidaJugada = false;
-
             while (!cartaValidaJugada) {
                 int opcio = UI.demanarCarta(jugador.getCartes().size());
                 Carta seleccionada = jugador.getCartes().get(opcio);
 
-                if (Regles.sonCartesCompatibles(seleccionada, cartaSuperior)) {
+                if (seleccionada.sonCartesCompatibles(cartaSuperior)) {
                     jugador.tirarCarta(seleccionada, pilo);
-                    System.out.println(jugador.getNom() + "ha tirat:");
+                    System.out.println(jugador.getNom() + " ha tirat:");
                     UI.mostrarCarta(seleccionada);
+
+                    if (seleccionada instanceof CartaCanviColor) {
+                        Carta.Color nuevoColor = UI.demanarColor();
+                        ((CartaCanviColor)seleccionada).setColor(nuevoColor);
+                        System.out.println("Color cambiado a: " + nuevoColor);
+
+                        if (seleccionada instanceof CartaRobarQuatre) {
+                            Jugador siguienteJugador = ordreJugadors.getSeguentJugador();
+                            ((CartaRobarQuatre)seleccionada).robarQuatre(siguienteJugador, mazo);
+                            System.out.println(siguienteJugador.getNom() + " ha de robar 4 cartes!");
+                            ordreJugadors.passarTorn(); // El siguiente jugador pierde turno
+                        }
+                    }
+
                     cartaValidaJugada = true;
                 } else {
                     System.out.println("No pots tirar aquesta carta. Torna a tirar");
@@ -73,7 +79,7 @@ public class Partida {
             }
         } else {
             System.out.println("No pots tirar. Roba una carta.");
-            System.out.println("Robant carta..."); // Poso els dos Prints perque sino no es veu clar quan ho excuto.
+            System.out.println("Robant carta...");
             jugador.robaCarta(mazo);
         }
 

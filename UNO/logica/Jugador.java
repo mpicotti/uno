@@ -44,7 +44,7 @@ public class Jugador {
     public boolean potTirarCarta(Carta cartaSuperior) {
         for (int i = 0; i < cartes.size(); i++) {
             Carta cartaJugador = cartes.get(i);
-            if (Regles.sonCartesCompatibles(cartaJugador, cartaSuperior)) {
+            if (cartaJugador.sonCartesCompatibles(cartaSuperior)) {
                 return true;
             }
         }

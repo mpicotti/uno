@@ -26,4 +26,9 @@ public class OrdreJugadors {
     public ArrayList<Jugador> getLlistaJugadors() {
         return jugadors;
     }
+
+    public Jugador getSeguentJugador() {
+        int seguent = (tornActual + 1) % jugadors.size();
+        return jugadors.get(seguent);
+    }
 }

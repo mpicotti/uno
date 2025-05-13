@@ -5,7 +5,7 @@ public class Carta {
     public Color color;
 
     public enum Color {
-        Groc, Vermell, Blau, Verd
+        Groc, Vermell, Blau, Verd, Negre
     }
 
     public Carta(Color color, int numero) {
@@ -19,5 +19,12 @@ public class Carta {
 
     public Color getColor() {
         return color;
+    }
+
+    public boolean sonCartesCompatibles(Carta cartaSuperior) {
+        if (this.color == Color.Negre) {
+            return true;
+        }
+        return this.color == cartaSuperior.getColor() || this.numero == cartaSuperior.getNumero();
     }
 }

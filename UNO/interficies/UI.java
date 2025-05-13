@@ -1,6 +1,8 @@
 package uno.interficies;
 
 import uno.logica.Carta;
+import uno.logica.CartaCanviColor;
+import uno.logica.CartaRobarQuatre;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,40 +13,42 @@ public class UI {
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
     public static final String BLUE = "\u001B[34m";
+    public static final String BLACK = "\u001B[30m";
 
     private static String pintarCarta(Carta carta) {
         String color = "";
         switch (carta.getColor()) {
-            case Carta.Color.Groc:
-                color = YELLOW;
-                break;
-            case Carta.Color.Vermell:
-                color = RED;
-                break;
-            case Carta.Color.Blau:
-                color = BLUE;
-                break;
-            case Carta.Color.Verd:
-                color = GREEN;
-                break;
-            default:
-                break;
+            case Groc: color = YELLOW; break;
+            case Vermell: color = RED; break;
+            case Blau: color = BLUE; break;
+            case Verd: color = GREEN; break;
+            case Negre: color = BLACK; break;
+            default: break;
         }
+
+        String textCentre = "  UNO  ";
+        if (carta instanceof CartaRobarQuatre) {
+            textCentre = "  +4   ";
+        } else if (carta instanceof CartaCanviColor && !(carta instanceof CartaRobarQuatre)) {
+            textCentre = " COLOR ";
+        }
+
+        String numeroStr = (carta.getNumero() == -1) ? " " : String.valueOf(carta.getNumero());
 
         String cartaPintada = String.format("""
             %s┌─────────┐%s
-            %s│ %d       │%s
+            %s│ %s       │%s
             %s│         │%s
-            %s│   UNO   │%s
+            %s│ %s │%s
             %s│         │%s
-            %s│       %d │%s
+            %s│       %s │%s
             %s└─────────┘%s""",
                 color, RESET,
-                color, carta.getNumero(), RESET,
+                color, numeroStr, RESET,
                 color, RESET,
+                color, textCentre, RESET,
                 color, RESET,
-                color, RESET,
-                color, carta.getNumero(), RESET,
+                color, numeroStr, RESET,
                 color, RESET);
 
         return cartaPintada;
@@ -77,7 +81,6 @@ public class UI {
         System.out.println();
     }
 
-
     public static int demanarCarta(int maxCartes) {
         Scanner scanner = new Scanner(System.in);
         int opcio = -1;
@@ -92,5 +95,33 @@ public class UI {
             }
         }
         return opcio;
+    }
+
+    public static Carta.Color demanarColor() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Selecciona un color:");
+        System.out.println("1. Groc");
+        System.out.println("2. Vermell");
+        System.out.println("3. Blau");
+        System.out.println("4. Verd");
+
+        int opcio = -1;
+        while (opcio < 1 || opcio > 4) {
+            System.out.print("Introdueix una opció (1-4): ");
+            if (scanner.hasNextInt()) {
+                opcio = scanner.nextInt();
+            } else {
+                scanner.next();
+                System.out.println("Entrada no vàlida. Torna-ho a provar.");
+            }
+        }
+
+        switch (opcio) {
+            case 1: return Carta.Color.Groc;
+            case 2: return Carta.Color.Vermell;
+            case 3: return Carta.Color.Blau;
+            case 4: return Carta.Color.Verd;
+            default: return Carta.Color.Groc;
+        }
     }
 }

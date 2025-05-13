@@ -11,11 +11,20 @@ public class Mazo {
         cartes = new Stack<>();
         cartesInicials = new Stack<>();
         for (Carta.Color color : Carta.Color.values()) {
-            cartes.push(new Carta(color, 0));
-            for (int j = 1; j <= 9; j++) {
-                cartes.push(new Carta(color, j));
-                cartes.push(new Carta(color, j));
+            if (color != Carta.Color.Negre) {
+                cartes.push(new Carta(color, 0));
+                for (int j = 1; j <= 9; j++) {
+                    cartes.push(new Carta(color, j));
+                    cartes.push(new Carta(color, j));
+                }
             }
+        }
+        for (int i = 0; i < 4; i++) {
+            cartes.push(new CartaCanviColor());
+        }
+
+        for (int i = 0; i < 4; i++) {
+            cartes.push(new CartaRobarQuatre());
         }
     }
 
