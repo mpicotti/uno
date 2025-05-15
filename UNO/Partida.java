@@ -65,7 +65,7 @@ public class Partida {
                             System.out.println("Color canviat a: " + nuevoColor);
 
                         if (seleccionada instanceof CartaProhibit) {
-                            System.out.println("Efecte de carta: Prohibit!");
+                            System.out.println("Prohibit");
                             ((CartaProhibit)seleccionada).prohibir(ordreJugadors);
                         }
 
